@@ -22,6 +22,7 @@ namespace Naval_battle
         public int k;
         public int myNumber;
         public int hod;
+         public bool fl = false;
         public bool flag = false;
         public bool flag1 = false;
         public bool flag2 = false;
@@ -203,29 +204,83 @@ namespace Naval_battle
         //Кнопка для растановка 4-х палубника
         public void fourShip_Click(object sender, EventArgs e)
         {
-            kol1.Text = Convert.ToString(Convert.ToInt32(kol1.Text) - 1);
-            allButton(4);
+            if(fl == false)
+            {
+                if (Convert.ToInt32(kol1.Text) > 0)
+                {
+                    kol1.Text = Convert.ToString(Convert.ToInt32(kol1.Text) - 1);
+                    allButton(4);
+                    fl = true;
+                }
+            }
+            else
+            {
+                kol1.Text = Convert.ToString(Convert.ToInt32(kol1.Text) + 1);
+                allButton(0);
+                fl = false;
+            }
         }
 
         //Кнопка для растановка 3-х палубника
         public void threeShip_Click(object sender, EventArgs e)
         {
-            kol2.Text = Convert.ToString(Convert.ToInt32(kol2.Text) - 1);
-            allButton(3);
+            if(fl == false)
+            {
+                if (Convert.ToInt32(kol2.Text) > 0)
+                {
+                    kol2.Text = Convert.ToString(Convert.ToInt32(kol2.Text) - 1);
+                    allButton(3);
+                    fl = true;
+                }
+            }
+            else
+            {
+                kol2.Text = Convert.ToString(Convert.ToInt32(kol2.Text) + 1);
+                allButton(0);
+                fl = false;
+            }
+            
+        }
         }
 
         //Кнопка для растановка 2-х палубника
         public void towShip_Click(object sender, EventArgs e)
         {
-            kol3.Text = Convert.ToString(Convert.ToInt32(kol3.Text) - 1);
-            allButton(2);
+            if (fl == false)
+            {
+                if (Convert.ToInt32(kol3.Text) > 0)
+                {
+                    kol3.Text = Convert.ToString(Convert.ToInt32(kol3.Text) - 1);
+                    allButton(2);
+                    fl = true;
+                }
+            }
+            else
+            {
+                kol3.Text = Convert.ToString(Convert.ToInt32(kol3.Text) + 1);
+                allButton(0);
+                fl = false;
+            }
         }
 
         //Кнопка для растановка 1-но палубника
         public void oneShip_Click(object sender, EventArgs e)
         {
-            kol4.Text = Convert.ToString(Convert.ToInt32(kol4.Text) - 1);
-            allButton(1);
+            if(fl == false)
+            {
+                if (Convert.ToInt32(kol4.Text) > 0)
+                {
+                    kol4.Text = Convert.ToString(Convert.ToInt32(kol4.Text) - 1);
+                    allButton(1);
+                    fl = true;
+                }
+            }
+            else
+            {
+                kol4.Text = Convert.ToString(Convert.ToInt32(kol4.Text) + 1);
+                allButton(0);
+                fl = false;
+            }
         }
 
         //Свойства при наведении окрашивает 1 серую клетку
@@ -332,6 +387,7 @@ namespace Naval_battle
                     countShip(kol2, threeShip);
                     countShip(kol3, towShip);
                     countShip(kol4, oneShip);
+                    giveUp.Enabled = true;
                     break;
 
                 case 1:
@@ -350,6 +406,7 @@ namespace Naval_battle
                     threeShip.Enabled = false;
                     towShip.Enabled = false;
                     oneShip.Enabled = true;
+                    giveUp.Enabled = false;
                     break;
 
                 case 2:
@@ -368,6 +425,7 @@ namespace Naval_battle
                     threeShip.Enabled = false;
                     towShip.Enabled = true;
                     oneShip.Enabled = false;
+                    giveUp.Enabled = false;
                     break;
 
                 case 3:
@@ -386,6 +444,7 @@ namespace Naval_battle
                     threeShip.Enabled = true;
                     towShip.Enabled = false;
                     oneShip.Enabled = false;
+                    giveUp.Enabled = false;
                     break;
 
                 case 4:
@@ -404,6 +463,7 @@ namespace Naval_battle
                     threeShip.Enabled = false;
                     towShip.Enabled = false;
                     oneShip.Enabled = false;
+                    giveUp.Enabled = false;
                     break;
 
                 case 5:
@@ -1364,6 +1424,8 @@ namespace Naval_battle
                 lb1.Text = "Ваш ход!";
             }
 
+            Victory();
+
             // ход игрока, позиция выстрела, тип корабля, флаг расположения
             //Проверка на попадание изи промах сделать
 
@@ -1389,10 +1451,20 @@ namespace Naval_battle
             {
                 btn.BackColor = Color.Gray;
             }*/
+        }
 
-            if (Mass() == 0)
+        public void Victory()
+        {
+            if (array[2] == 0)
             {
-                MessageBox.Show("Вы проиграли!");
+                MessageBox.Show("Вы победили!");
+            }
+            else
+            {
+                if (Mass() == 0)
+                {
+                    MessageBox.Show("Вы проиграли!");
+                }
             }
         }
 
