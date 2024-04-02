@@ -39,6 +39,7 @@ namespace Naval_battle
             InitializeComponent();
             MassButton();
             allButton(0);
+            giveUp.Enabled = false;
 
             lb1.Text = "Ожидание второго игрока ...";
         }
@@ -57,39 +58,54 @@ namespace Naval_battle
             catch (Exception ex) { Console.WriteLine(ex.ToString()); }
         }
 
-        private void Game_Shown(object sender, EventArgs e)
+        private void Game_Load(object sender, EventArgs e)
         {
             Task.Run(() => InitGame());
-            timer1.Start();
+            Task.Run(() => TickHandler());
         }
 
-        //разблокировка кнопок нужна
-        private void timer1_Tick(object sender, EventArgs e)
+        private void TickHandler()
         {
-            if (isStart == true)
+            while (true)
             {
-                if (!flag2)
+                if (isStart == true)
                 {
-                    lb1.Text = "Расставьте корабли!";
-                    flag2 = true;
-                    Task.Run(() => IsReadyOponent());
+                    if (!flag2)
+                    {
+                        if (lb1.InvokeRequired)
+                        {
+                            lb1.Invoke(new Action(() => { lb1.Text = "Расставьте корабли!"; }));
+                        }
+                        flag2 = true;
+                        Task.Run(() => IsReadyOponent());
+                        break;
+                    }
                 }
             }
-
-            if (isReady)
+            while (true)
             {
-                lb1.Text = "Противник готов к битве!";
-
-                if (flag1)
+                if (isReady)
                 {
-                    timer1.Stop();
-                    if(myNumber == 1)
+                    if (lb1.InvokeRequired)
                     {
-                        lb1.Text = "Ваш ход!";
+                        lb1.Invoke(new Action(() => { lb1.Text = "Противник готов к битве!"; }));
                     }
-                    else
+
+                    if (flag1)
                     {
-                        OponentTurn();
+                        giveUp.Enabled = true;
+                        if (myNumber == 1)
+                        {
+                            if (lb1.InvokeRequired)
+                            {
+                                lb1.Invoke(new Action(() => { lb1.Text = "Ваш ход!"; }));
+                            }
+                        }
+                        else
+                        {
+                            OponentTurn();
+                        }
+                        break;
                     }
                 }
             }

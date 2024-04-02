@@ -3909,10 +3909,6 @@
             this.button102.TabIndex = 217;
             this.button102.UseVisualStyleBackColor = true;
             // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3926,7 +3922,7 @@
             this.Name = "Game";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Игра морской боой";
-            this.Load += new System.EventHandler(this.Game_Shown);
+            this.Load += new System.EventHandler(this.Game_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
